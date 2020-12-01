@@ -26,4 +26,11 @@ cp -r $EXERCISE_DIR/* $OUTPUT_DIR
 echo "Running elm-format"
 elm-format $OUTPUT_DIR --yes
 
+echo creating representation.txt
+cat $OUTPUT_DIR/src/*.elm > $OUTPUT_DIR/representation.txt
+
+echo creating mapping.json
+echo {} > $OUTPUT_DIR/mapping.json
+
+
 echo Finished

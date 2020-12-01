@@ -13,7 +13,6 @@ USER node
 RUN npm install elm-format -g
 
 COPY ./bin/run.sh ./bin/run.sh
-COPY ./bin/elm-format ./bin/elm-format
 
 ENTRYPOINT [ "bash", "./bin/run.sh" ]
 # ENTRYPOINT sleep 600
