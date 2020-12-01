@@ -11,6 +11,7 @@ ENV NPM_CONFIG_PREFIX=/home/node/.npm-global
 ENV PATH=$PATH:/home/node/.npm-global/bin
 USER node
 RUN npm install elm-format -g
+RUN npm install cloc -g
 
 COPY ./bin/run.sh ./bin/run.sh
 

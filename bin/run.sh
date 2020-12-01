@@ -23,6 +23,15 @@ OUTPUT_DIR=$(readlink -f $3)
 echo "Copying exercise files into $OUTPUT_DIR"
 cp -r $EXERCISE_DIR/* $OUTPUT_DIR
 
+echo "Removing comments"
+pushd $OUTPUT_DIR/src/
+cloc --strip-comments=nocomments *.elm
+rm *.elm
+for f in *.nocomments; do 
+    mv -- "$f" "${f%.nocomments}"
+done
+popd
+
 echo "Running elm-format"
 elm-format $OUTPUT_DIR --yes
 
