@@ -1,5 +1,5 @@
 .dockerignore
-.git*
+.git/
 README.md
 Dockerfile
 node_modules/
