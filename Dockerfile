@@ -2,8 +2,6 @@
 FROM node:lts-buster
 
 # Working directory as specified by exercism
-RUN mkdir /opt/representer
-RUN mkdir /opt/representer/bin
 WORKDIR /opt/representer
 
 # node best practices https://github.com/nodejs/docker-node/blob/master/docs/BestPractices.md#global-npm-dependencies
