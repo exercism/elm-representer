@@ -1,45 +1,36 @@
-#!/usr/bin/env bash
-
-# Example:
-# bin/run.sh pangram ~/exercism/elm/pangram .
+#!/bin/sh
 
 set -e # Make script exit when a command fail.
 set -u # Exit on usage of undeclared variable.
 # set -x # Trace what gets executed.
-set -o pipefail # Catch failures in pipes.
 
-USAGE="bin/run.sh <exercise-slug> <exercise_directory> <output_directory>"
+# Command line arguments
+SLUG="$1"
+INPUT_DIR="$2"
+OUTPUT_DIR="$3"
 
-# If arguments not provided, print usage and exit
-if [ -z "$1" ] || [ -z "$2" ] || [ -z "$3" ]; then
-    echo "Usage: $USAGE"
-    exit 1
-fi
+# Setup a working directory
+WORK_DIR=/opt/representer/app
+cp -rp $INPUT_DIR $WORK_DIR
 
-EXERCISE_SLUG="$1"
-EXERCISE_DIR=$(readlink -f $2)
-OUTPUT_DIR=$(readlink -f $3)
+# Add bin/ to the path to make available installed executables
+export PATH=/opt/representer/bin:${PATH}
 
-echo "Copying exercise files into $OUTPUT_DIR"
-cp -r $EXERCISE_DIR/* $OUTPUT_DIR
-
+# Removing comments
 echo "Removing comments"
-pushd $OUTPUT_DIR/src/
-cloc --strip-comments=nocomments *.elm
-rm *.elm
-for f in *.nocomments; do 
-    mv -- "$f" "${f%.nocomments}"
-done
-popd
+cd $WORK_DIR/src
+elm-strip-comments --replace *.elm
 
+# Running elm-format
 echo "Running elm-format"
-elm-format $OUTPUT_DIR --yes
+elm-format *.elm --yes
 
-echo creating representation.txt
-cat $OUTPUT_DIR/src/*.elm > $OUTPUT_DIR/representation.txt
+# Move normalized representation to output dir
+echo "Creating representation.txt"
+cat *.elm > $OUTPUT_DIR/representation.txt
 
-echo creating mapping.json
-echo {} > $OUTPUT_DIR/mapping.json
-
+# Create the mapping for placeholders
+echo "Creating mapping.json"
+echo "{}" > $OUTPUT_DIR/mapping.json
 
 echo Finished
