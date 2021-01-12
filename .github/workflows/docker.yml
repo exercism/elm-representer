@@ -1,8 +1,8 @@
 name: Push Docker images to DockerHub and ECR
 
-on: pull_request
-  # push:
-  #   branches: [main, master]
+on:
+  push:
+    branches: [main, master]
 
 jobs:
   multiple-registries:
