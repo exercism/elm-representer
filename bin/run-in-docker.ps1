@@ -30,4 +30,4 @@ param (
 )
 
 docker build -t elm-representer .
-docker run --network none --mount type=bind,src=$INPUT_DIR,dst=/solution --mount type=bind,src=$OUTPUT_DIR,dst=/output elm-representer $SLUG /solution/ /output/
+docker run --network none --mount type=bind,src=$InputDirectory,dst=/solution --mount type=bind,src=$OutputDirectory,dst=/output elm-representer $Exercise /solution/ /output/
