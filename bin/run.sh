@@ -19,6 +19,7 @@ export PATH=/opt/representer/bin:${PATH}
 # Removing comments
 echo "Removing comments"
 cd $WORK_DIR/src
+rm -f *.example.elm # for practice
 elm-strip-comments --replace *.elm
 
 # Running elm-format
