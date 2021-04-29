@@ -16,13 +16,11 @@ RUN curl -L -o elm-format.tgz https://github.com/avh4/elm-format/releases/downlo
   && tar xf elm-format.tgz \
   && mv elm-format bin
 
-# Install elm-strip-comments
-RUN curl -L -o elm-strip-comments.tar.gz https://github.com/mpizenberg/elm-strip-comments/releases/download/v0.1.1/elm-strip-comments_linux.tar.gz \
-  && tar xf elm-strip-comments.tar.gz \
-  && mv elm-strip-comments bin
-
 # Pack together things to copy to the runner container
 COPY bin/run.sh bin/run.sh
+COPY src/cli.js bin/cli.js
+# elm make must have been run to create / update main.js before the container is created
+COPY src/main.js bin/main.js
 
 # Lightweight runner container
 FROM node:lts-buster-slim

@@ -1,25 +1,17 @@
-# local node modules
+.idea/
+NOTES.md
+dist/
+elm-stuff/
+node_modules/
+notUsed/
 package-lock.json
-
-# output of the elm-test-runner tool
-results.json
-
-# Distribution
-build/
-
-# elm-package generated files
-elm-stuff
-
-# elm-repl generated files
-repl-temp-*
-
-# Dependency directories
-node_modules
-
-# Desktop Services Store on macOS
+ts-learn/
+ts/
+run/
+exp/pd-andy.js
+compiled/
+exp/
+src/main.js
 .DS_Store
-
-# potentially sensitive environment variables
-.env
-
-.netlify
+.coverage
+/example-output/

@@ -1,0 +1,27 @@
+version: 2.1
+orbs:
+  node: circleci/node@4.1.0
+jobs:
+  install-and-test:
+    docker:
+      - image: circleci/node:15.4
+    steps:
+      - checkout
+      - run:
+          command: |
+            npm install
+            npx elm-test --report junit > test-results.xml
+      - run:
+          name: Copy tests results for storing
+          command: |
+            mkdir ~/test-results
+            cp test-results.xml ~/test-results/
+          when: always
+      - store_test_results:
+          path: ~/test-results
+      - store_artifacts:
+          path: ~/test-results
+workflows:
+  everything:
+    jobs:
+      - install-and-test
