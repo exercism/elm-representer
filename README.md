@@ -41,18 +41,18 @@ sh normalize-examples.sh
 elm-test
 ```
 
-## TODO Docker 
+## Docker 
 
-This repo also contains the Docker manifest for integration with Exercism.
+This repo also contains the Docker configuration for integration with Exercism.
 
 To normalise an Exercism solution using a Docker container:
 
 ```sh
 # Mac / Linux
-bin/run-in-docker.sh <exercise-slug> <exercise-directory> <output-directory>
+./bin/run-in-docker.sh bob /PathToThisRepo/example-bob-solution/ /PathToThisRepo/example-output/
 ```
 
 ```ps
 # Windows
-bin/run-in-docker.ps1 <exercise-slug> <exercise-directory> <output-directory>
+./bin/run-in-docker.ps1 bob /PathToThisRepo/example-bob-solution/ /PathToThisRepo/example-output/
 ```
