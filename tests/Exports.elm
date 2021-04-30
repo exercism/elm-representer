@@ -6,7 +6,7 @@ import Test exposing (..)
 
 suite : Test
 suite =
-    describe "Normalize"
+    describe "Normalizing exports"
         [ test "shoud not normalize Module Name" <|
             \_ ->
                 givenElmFileOf "module Bob exposing (..)"

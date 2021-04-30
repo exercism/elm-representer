@@ -6,7 +6,7 @@ import Test exposing (..)
 
 suite : Test
 suite =
-    describe "Normalize"
+    describe "Normalizing patterns "
         [ test "shoud normalize tuple pattern" <|
             \_ ->
                 givenElmCodeOf "add (x, y) =\n    x + y"

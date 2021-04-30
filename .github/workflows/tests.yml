@@ -19,7 +19,7 @@ jobs:
           cache-restore-key: elm-test
 
       - name: Run the tests
-        run: elm-test
+        run: elm-test-rs
 
   format:
     name: Check formatting

@@ -6,7 +6,7 @@ import Test exposing (..)
 
 suite : Test
 suite =
-    describe "Normalize"
+    describe "Normalizing type alias'"
         [ test "shoud normalize Name and Type of Custom Type - Type Alias'" <|
             \_ ->
                 givenElmCodeOf "type alias FirstName = Name"

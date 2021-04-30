@@ -6,7 +6,7 @@ import Test exposing (..)
 
 suite : Test
 suite =
-    describe "Normalize"
+    describe "Normalizing expressions"
         [ test "shoud normalize operator application expressions" <|
             \_ ->
                 givenElmCodeOf "shadowAdd x y =\n    x + y"

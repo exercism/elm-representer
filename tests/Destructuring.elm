@@ -6,8 +6,8 @@ import Test exposing (..)
 
 suite : Test
 suite =
-    describe "Normalize"
-        [ test "shoud normalize destructuring" <|
+    describe "Normalizing destructuring"
+        [ test "shoud work" <|
             \_ ->
                 givenElmCodeOf "{name, age} = person"
                     |> whenNormalize

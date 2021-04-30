@@ -6,7 +6,7 @@ import Test exposing (..)
 
 suite : Test
 suite =
-    describe "Normalize"
+    describe "Normalizing imports"
         [ test "shoud not normalize qualified imports" <|
             \_ ->
                 givenElmCodeOf """import Dict
