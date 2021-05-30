@@ -37,7 +37,9 @@ normalize original =
 
     else
         Err <|
-            "Inconsistency detected, which means there is a bug, please create an Issue with this output"
+            "Inconsistency detected, which means there is a bug, please create an issue at https://github.com/exercism/elm-representer/issues with this output"
+                ++ "\n\nOriginal\n"
+                ++ original
                 ++ "\n\nFirst normalisation\n"
                 ++ firstNormalization
                 ++ "\n\nSecond normalisation\n"
