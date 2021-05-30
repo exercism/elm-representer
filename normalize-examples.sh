@@ -1,4 +1,4 @@
-sh make.sh
+npm run make
 
 cat example-originals/Anagram.elm        | node src/cli.js examples-normalized/AnagramIdentifierMapping.json > examples-normalized/Anagram.elm
 cat example-originals/Bob.elm            | node src/cli.js examples-normalized/BobIdentifierMapping.json > examples-normalized/Bob.elm
