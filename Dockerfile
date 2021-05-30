@@ -2,28 +2,30 @@
 FROM node:lts-buster-slim AS builder
 
 # Working directory as specified by exercism
-WORKDIR /opt/representer
-
-# Install curl to download executables
-RUN apt update && apt install -y curl
+WORKDIR /opt/elm-representer
 
 # Create a directory for binaries
 RUN mkdir bin
-ENV PATH="/opt/representer/bin:${PATH}"
+ENV PATH="/opt/elm-representer/bin:${PATH}"
+ENV ELM_HOME="/opt/elm-representer/elm_home"
 
-# Install elm-format
-RUN curl -L -o elm-format.tgz https://github.com/avh4/elm-format/releases/download/0.8.4/elm-format-0.8.4-linux-x64.tgz \
-  && tar xf elm-format.tgz \
-  && mv elm-format bin
+# Install elm and elm-format
+COPY package.json package-lock.json elm-tooling.json ./
+RUN npm ci \
+  # Copy elm-format to bin/ to be able to use it in the lightweight runner container
+  && cp elm_home/elm-tooling/elm-format/0.8.5/elm-format bin/
 
-# Pack together things to copy to the runner container
-COPY bin/run.sh bin/run.sh
-COPY src/cli.js bin/cli.js
-# elm make must have been run to create / update main.js before the container is created
-COPY src/main.js bin/main.js
+# Compile the elm code for the representer
+RUN apt update && apt -y install ca-certificates
+COPY src/*.elm src/
+COPY elm.json ./
+RUN npm run make
+
+# Pack together things to copy to the runner container into bin/
+COPY bin/run.sh src/cli.js src/main.js bin/
 
 # Lightweight runner container
 FROM node:lts-buster-slim
-WORKDIR /opt/representer
-COPY --from=builder /opt/representer/bin bin
+WORKDIR /opt/elm-representer
+COPY --from=builder /opt/elm-representer/bin bin
 ENTRYPOINT [ "bin/run.sh" ]
