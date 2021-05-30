@@ -4,7 +4,10 @@ import Dict as Dict exposing (Dict)
 
 
 type State
-    = State (Dict String String) Int
+    = State
+        { identifierMapping : Dict String String
+        , uniqueInt : Int
+        }
 
 
 initialize : List String -> State
@@ -76,7 +79,10 @@ initialize customReservedWords =
         initialIdentifierMapping =
             Dict.fromList reservedWords
     in
-    State initialIdentifierMapping 1
+    State
+        { identifierMapping = initialIdentifierMapping
+        , uniqueInt = 1
+        }
 
 
 {-| Normalize a string that is being used to identify an Elm Type
@@ -94,26 +100,20 @@ normalizeType state original =
 
 
 normalize : State -> String -> ( State, String )
-normalize state original =
-    let
-        (State identifierMapping uniqueInt) =
-            state
-
-        existingMapping =
-            Dict.get original identifierMapping
-    in
-    case existingMapping of
+normalize (State state) original =
+    case Dict.get original state.identifierMapping of
         Just normalizedIdentifier ->
-            ( state, normalizedIdentifier )
+            ( State state, normalizedIdentifier )
 
         Nothing ->
             let
                 newNormalizedIdentifier =
-                    normalizeMaintainCase uniqueInt original
+                    normalizeMaintainCase state.uniqueInt original
             in
             ( State
-                (Dict.insert original newNormalizedIdentifier identifierMapping)
-                (uniqueInt + 1)
+                { identifierMapping = Dict.insert original newNormalizedIdentifier state.identifierMapping
+                , uniqueInt = state.uniqueInt + 1
+                }
             , newNormalizedIdentifier
             )
 
@@ -147,5 +147,5 @@ firstLetterIsLowerCase original =
 
 
 getIdentifierMapping : State -> Dict String String
-getIdentifierMapping (State identifierMapping _) =
+getIdentifierMapping (State { identifierMapping }) =
     identifierMapping
