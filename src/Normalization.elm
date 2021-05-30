@@ -151,4 +151,9 @@ firstLetterIsLowerCase original =
 
 getFinalIdentifierMapping : State -> Dict String String
 getFinalIdentifierMapping (State { initialIdentifierMapping, identifierMapping }) =
+    -- Remove initial identifiers
     Dict.diff identifierMapping initialIdentifierMapping
+        |> Dict.toList
+        -- Reverse the key and values to have in the correct way for the specs
+        |> List.map (\( key, val ) -> ( val, key ))
+        |> Dict.fromList
