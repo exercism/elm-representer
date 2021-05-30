@@ -55,5 +55,5 @@ normalizeWithoutCheck original =
         Ok rawFile ->
             process init rawFile
                 |> normalizeElmFile
-                |> Tuple.mapFirst Normalization.getIdentifierMapping
+                |> Tuple.mapFirst Normalization.getFinalIdentifierMapping
                 |> Tuple.mapSecond (writeFile >> write)

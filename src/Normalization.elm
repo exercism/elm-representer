@@ -1,11 +1,12 @@
-module Normalization exposing (State, getIdentifierMapping, initialize, normalize, normalizeType)
+module Normalization exposing (State, getFinalIdentifierMapping, initialize, normalize, normalizeType)
 
 import Dict as Dict exposing (Dict)
 
 
 type State
     = State
-        { identifierMapping : Dict String String
+        { initialIdentifierMapping : Dict String String
+        , identifierMapping : Dict String String
         , uniqueInt : Int
         }
 
@@ -80,7 +81,8 @@ initialize customReservedWords =
             Dict.fromList reservedWords
     in
     State
-        { identifierMapping = initialIdentifierMapping
+        { initialIdentifierMapping = initialIdentifierMapping
+        , identifierMapping = initialIdentifierMapping
         , uniqueInt = 1
         }
 
@@ -111,7 +113,8 @@ normalize (State state) original =
                     normalizeMaintainCase state.uniqueInt original
             in
             ( State
-                { identifierMapping = Dict.insert original newNormalizedIdentifier state.identifierMapping
+                { initialIdentifierMapping = state.initialIdentifierMapping
+                , identifierMapping = Dict.insert original newNormalizedIdentifier state.identifierMapping
                 , uniqueInt = state.uniqueInt + 1
                 }
             , newNormalizedIdentifier
@@ -146,6 +149,6 @@ firstLetterIsLowerCase original =
         == "."
 
 
-getIdentifierMapping : State -> Dict String String
-getIdentifierMapping (State { identifierMapping }) =
-    identifierMapping
+getFinalIdentifierMapping : State -> Dict String String
+getFinalIdentifierMapping (State { initialIdentifierMapping, identifierMapping }) =
+    Dict.diff identifierMapping initialIdentifierMapping
