@@ -1,5 +1,4 @@
-# elm-format doesn't work on node:lts-alpine or node:lts
-FROM node:lts-buster-slim AS builder
+FROM node:lts-alpine AS builder
 
 # Working directory as specified by exercism
 WORKDIR /opt/elm-representer
@@ -16,7 +15,6 @@ RUN npm ci \
   && cp elm_home/elm-tooling/elm-format/0.8.5/elm-format bin/
 
 # Compile the elm code for the representer
-RUN apt update && apt -y install ca-certificates
 COPY src/*.elm src/
 COPY elm.json ./
 RUN npm run make
@@ -25,7 +23,7 @@ RUN npm run make
 COPY bin/run.sh src/cli.js src/main.js bin/
 
 # Lightweight runner container
-FROM node:lts-buster-slim
+FROM node:lts-alpine
 WORKDIR /opt/elm-representer
 COPY --from=builder /opt/elm-representer/bin bin
 ENTRYPOINT [ "bin/run.sh" ]

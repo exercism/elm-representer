@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env sh
 
 set -e # Make script exit when a command fail.
 set -u # Exit on usage of undeclared variable.
@@ -9,15 +9,16 @@ INPUT_DIR="$2"
 OUTPUT_DIR="$3"
 
 # Normalize identifiers and remove comments
-ELM_FILES=("$INPUT_DIR"/*.elm)
-if [ ${#ELM_FILES[@]} == 0 ]; then
-    echo "No .elm file found (${ELM_FILES[@]})"
+ELM_FILES=$(ls "$INPUT_DIR"/*.elm)
+ELM_FILE_COUNT=$(ls "$INPUT_DIR"/*.elm | wc -l)
+if [ $ELM_FILE_COUNT == 0 ]; then
+    echo "No .elm file found"
     exit -1
-elif [ ${#ELM_FILES[@]} -gt 1 ]; then  
-    echo "Multiple .elm files found (${ELM_FILES[@]})"
+elif [ $ELM_FILE_COUNT -gt 1 ]; then
+    echo "Multiple .elm files found: $ELM_FILES"
     exit -2
 fi
-ELM_FILEPATH=${ELM_FILES[0]}
+ELM_FILEPATH=$ELM_FILES
 ELM_FILENAME="$(basename $ELM_FILEPATH)"
 
 echo "Normalizing identifiers in ${OUTPUT_DIR}${ELM_FILENAME}"
