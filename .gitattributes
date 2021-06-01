@@ -1,2 +1,2 @@
 # Don't modify line endings when comitting / pulling
-*.* binary
+* text=auto

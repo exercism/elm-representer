@@ -6,7 +6,7 @@
     Builds the Dockerfile
     Runs the docker image passing along the initial arguments
     Writes the normalised code to the passed-in output directory.
-.PARAMETER Exercise
+.PARAMETER Slug
     The slug of the exercise which tests to run.
 .PARAMETER InputDirectory
     **RELATIVE** path to solution folder (with trailing slash)
@@ -20,7 +20,7 @@
 
 param (
     [Parameter(Position = 0, Mandatory = $true)]
-    [string]$Exercise,
+    [string]$Slug,
     
     [Parameter(Position = 1, Mandatory = $true)]
     [string]$InputDirectory,
@@ -30,4 +30,4 @@ param (
 )
 
 docker build -t elm-representer .
-docker run --network none --mount type=bind,src=$InputDirectory,dst=/solution --mount type=bind,src=$OutputDirectory,dst=/output elm-representer $Exercise /solution/ /output/
+docker run --network none --mount type=bind,src=$InputDirectory,dst=/solution --mount type=bind,src=$OutputDirectory,dst=/output elm-representer $Slug /solution/ /output/

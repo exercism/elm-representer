@@ -1,0 +1,37 @@
+name: Run tests
+
+on:
+  pull_request:
+  push:
+    branches: [ master, main ]
+
+jobs:
+  test:
+    name: Run the tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Install elm tools and cache the ELM_HOME directory
+        uses: mpizenberg/elm-tooling-action@v1.2
+        with:
+          cache-key: elm-test-${{ hashFiles('elm-tooling.json', 'elm.json') }}
+          cache-restore-key: elm-test
+
+      - name: Run the tests
+        run: elm-test-rs
+
+  format:
+    name: Check formatting
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Install elm tools and cache the ELM_HOME directory
+        uses: mpizenberg/elm-tooling-action@v1.2
+        with:
+          cache-key: elm-format-${{ hashFiles('elm-tooling.json') }}
+          cache-restore-key: elm-format
+
+      - name: Check formatting
+        run: elm-format src --validate
