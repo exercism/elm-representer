@@ -1,5 +1,17 @@
 # Elm Representer
 
+TODO: restore caching to docker image in github actions
+
+```
+ - name: Cache Docker layers
+        uses: actions/cache@0781355a23dac32fd3bac414512f4b903437991a # 2.1.3
+        with:
+          path: /tmp/.buildx-cache
+          key: ${{ runner.os }}-buildx-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-buildx-
+```
+
 [![ceddlyburge](https://circleci.com/gh/ceddlyburge/elm-representer.svg?style=svg)](https://circleci.com/gh/ceddlyburge/elm-representer)
 
 This outputs a normalized representation of Elm Code, to make automated analysis easier within Exercism.
