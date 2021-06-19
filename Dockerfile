@@ -17,10 +17,10 @@ RUN npm ci \
 # Compile the elm code for the representer
 COPY src/*.elm src/
 COPY elm.json ./
-RUN npm run make
+RUN npm run make && cp src/main.js bin/
 
 # Pack together things to copy to the runner container into bin/
-COPY bin/run.sh src/cli.js src/main.js bin/
+COPY bin/run.sh src/cli.js bin/
 
 # Lightweight runner container
 FROM node:lts-alpine
