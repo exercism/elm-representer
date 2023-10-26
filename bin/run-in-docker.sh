@@ -34,10 +34,10 @@ SLUG="$1"
 INPUT_DIR="$2"
 OUTPUT_DIR="$3"
 
-docker build -t elm-representer .
+docker build -t exercism/elm-representer .
 
 mkdir -p "$OUTPUT_DIR"
 docker run --network none \
     --mount type=bind,src=$INPUT_DIR,dst=/solution \
     --mount type=bind,src=$OUTPUT_DIR,dst=/output \
-    elm-representer $SLUG /solution/ /output/
+    exercism/elm-representer $SLUG /solution/ /output/

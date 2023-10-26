@@ -3,7 +3,7 @@ name: Run tests
 on:
   pull_request:
   push:
-    branches: [ master, main ]
+    branches: [master, main]
 
 jobs:
   test:
@@ -36,32 +36,27 @@ jobs:
       - name: Check formatting
         run: elm-format src --validate
 
-  check-docker:
-    name: Check the docker container is built successfully
-    runs-on: ubuntu-latest
+  smoke_tests:
+    name: Run the Smoke Tests
+    runs-on: ubuntu-22.04
     steps:
       - name: Checkout code
-        uses: actions/checkout@5a4ac9002d0be2fb38bd78e4b4dbde5606d7042f # 2.3.4
+        uses: actions/checkout@755da8c3cf115ac066823e79a1e1788f8940201b
 
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@154c24e1f33dbb5865a021c99f1318cfebf27b32 # 1.1.1
-
-      - name: Cache Docker layers
-        uses: actions/cache@0781355a23dac32fd3bac414512f4b903437991a # 2.1.3
+        uses: docker/setup-buildx-action@4c0219f9ac95b02789c1075625400b2acbff50b1
         with:
-          path: /tmp/.buildx-cache
-          key: ${{ runner.os }}-buildx-${{ github.sha }}
-          restore-keys: |
-            ${{ runner.os }}-buildx-
+          install: true
 
-      - name: Build Docker image
-        uses: docker/build-push-action@0db984c1826869dcd0740ff26ff75ff543238fd9 # 2.2.2
+      - name: Build Docker image and store in cache
+        uses: docker/build-push-action@2eb1c1961a95fc15694676618e422e8ba1d63825
         with:
           context: .
-          file: ./Dockerfile
           push: false
-          tags: |
-            ${{ github.event.repository.full_name }}:latest
-            ${{ github.event.repository.full_name }}:${{ github.sha }}
-          cache-from: type=local,src=/tmp/.buildx-cache
-          cache-to: type=local,dest=/tmp/.buildx-cache
+          load: true
+          tags: exercism/elm-representer
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: Run Tests in Docker
+        run: bin/run-tests-in-docker.sh
