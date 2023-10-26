@@ -1,0 +1,10 @@
+{
+ "identifier_1": "filterAnagramsOf",
+ "identifier_2": "word",
+ "identifier_3": "sortedLowercaseCharactersMatch",
+ "identifier_4": "notExactlyTheSameWord",
+ "identifier_5": "candidate",
+ "identifier_6": "sortedLowercaseCharacters",
+ "identifier_7": "word1",
+ "identifier_8": "word2"
+}

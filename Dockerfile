@@ -1,12 +1,12 @@
 FROM node:lts-alpine AS builder
 
 # Working directory as specified by exercism
-WORKDIR /opt/elm-representer
+WORKDIR /opt/representer
 
 # Create a directory for binaries
 RUN mkdir bin
-ENV PATH="/opt/elm-representer/bin:${PATH}"
-ENV ELM_HOME="/opt/elm-representer/elm_home"
+ENV PATH="/opt/representer/bin:${PATH}"
+ENV ELM_HOME="/opt/representer/elm_home"
 
 # Install elm and elm-format
 COPY package.json package-lock.json elm-tooling.json ./
@@ -24,6 +24,6 @@ COPY bin/run.sh src/cli.js bin/
 
 # Lightweight runner container
 FROM node:lts-alpine
-WORKDIR /opt/elm-representer
-COPY --from=builder /opt/elm-representer/bin bin
+WORKDIR /opt/representer
+COPY --from=builder /opt/representer/bin bin
 ENTRYPOINT [ "bin/run.sh" ]

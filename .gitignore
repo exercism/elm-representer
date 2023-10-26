@@ -15,3 +15,6 @@ src/main.js
 .DS_Store
 .coverage
 /example-output/
+/smoke-tests/**/*/mapping.json
+/smoke-tests/**/*/representation.txt
+/smoke-tests/**/*/Representation.elm
