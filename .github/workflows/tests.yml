@@ -8,12 +8,12 @@ on:
 jobs:
   test:
     name: Run the tests
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@ee0669bd1cc54295c223e0bb666b733df41de1c5
 
       - name: Install elm tools and cache the ELM_HOME directory
-        uses: mpizenberg/elm-tooling-action@9938f6852d942f9714cac58761f378bf25881513
+        uses: mpizenberg/elm-tooling-action@809c844d494c95906eb8cafcfa0060b29193709d
         with:
           cache-key: elm-test-${{ hashFiles('elm-tooling.json', 'elm.json') }}
           cache-restore-key: elm-test
@@ -23,12 +23,12 @@ jobs:
 
   format:
     name: Check formatting
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@ee0669bd1cc54295c223e0bb666b733df41de1c5
 
       - name: Install elm tools and cache the ELM_HOME directory
-        uses: mpizenberg/elm-tooling-action@9938f6852d942f9714cac58761f378bf25881513
+        uses: mpizenberg/elm-tooling-action@809c844d494c95906eb8cafcfa0060b29193709d
         with:
           cache-key: elm-format-${{ hashFiles('elm-tooling.json') }}
           cache-restore-key: elm-format
@@ -38,7 +38,7 @@ jobs:
 
   smoke_tests:
     name: Run the Smoke Tests
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     steps:
       - name: Checkout code
         uses: actions/checkout@755da8c3cf115ac066823e79a1e1788f8940201b
