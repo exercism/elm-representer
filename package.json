@@ -2,6 +2,7 @@
   "name": "elm-representer",
   "version": "1.0.0",
   "description": "Normalize exercism solutions for the Elm track",
+  "type": "module",
   "scripts": {
     "postinstall": "elm-tooling install",
     "make": "elm make --optimize src/Main.elm --output=src/main.js",

@@ -26,4 +26,5 @@ COPY bin/run.sh src/cli.js bin/
 FROM node:lts-alpine
 WORKDIR /opt/representer
 COPY --from=builder /opt/representer/bin bin
+COPY --from=builder /opt/representer/package.json ./
 ENTRYPOINT [ "bin/run.sh" ]
