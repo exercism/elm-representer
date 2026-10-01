@@ -2,7 +2,6 @@ module Helpers exposing (givenElmCodeOf, givenElmFileOf, thenContains, whenNorma
 
 import Dict exposing (Dict)
 import Expect exposing (Expectation)
-import Expect.Extra
 import NormalizeElmCode
 import String.Extra
 import Test exposing (..)
@@ -51,7 +50,9 @@ thenContains expected normalizationResult =
     in
     case normalizedAndCleanedResult of
         Ok normalizedAndCleanedCode ->
-            Expect.Extra.match (Expect.Extra.stringPattern expected) normalizedAndCleanedCode
+            String.contains expected normalizedAndCleanedCode
+                |> Expect.equal True
+                |> Expect.onFail ("Expected:\n\n" ++ normalizedAndCleanedCode ++ "\n\nto contain:\n\n" ++ expected)
 
         Err message ->
             Expect.fail message
