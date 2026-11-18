@@ -1,4 +1,5 @@
-FROM node:lts-alpine AS builder
+# node:lts-alpine as of 2026/11/17
+FROM node:26-alpine3.24@sha256:6bd9ab43c0ec0190ca7b2d193906cb8b7edf6e7f4afa43ddeccd6452710bffb5 AS builder
 
 # Working directory as specified by exercism
 WORKDIR /opt/representer
@@ -23,7 +24,7 @@ RUN npm run make && cp src/main.js bin/
 COPY bin/run.sh src/cli.js bin/
 
 # Lightweight runner container
-FROM node:lts-alpine
+FROM node:26-alpine3.24@sha256:6bd9ab43c0ec0190ca7b2d193906cb8b7edf6e7f4afa43ddeccd6452710bffb5
 WORKDIR /opt/representer
 COPY --from=builder /opt/representer/bin bin
 ENTRYPOINT [ "bin/run.sh" ]

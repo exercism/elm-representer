@@ -13,10 +13,10 @@ ELM_FILES=$(ls "${INPUT_DIR}"/src/*.elm)
 ELM_FILE_COUNT=$(ls "${INPUT_DIR}"/src/*.elm | wc -l)
 if [ $ELM_FILE_COUNT == 0 ]; then
     echo "No .elm file found"
-    exit -1
+    exit 1
 elif [ $ELM_FILE_COUNT -gt 1 ]; then
     echo "Multiple .elm files found: ${ELM_FILES}"
-    exit -2
+    exit 2
 fi
 
 ELM_FILEPATH="${ELM_FILES}"
